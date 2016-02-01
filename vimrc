@@ -145,7 +145,7 @@ Plug 'chazy/cscope_maps'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'vim-scripts/CCTree'
-
+call plug#end()
 " ==== End plug
 
 
