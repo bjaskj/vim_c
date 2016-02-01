@@ -1,3 +1,12 @@
+" set default 'runtimepath' (without ~/.vim folders)
+let &runtimepath = printf('%s/vimfiles,%s,%s/vimfiles/after', $VIM, $VIMRUNTIME, $VIM)
+
+" what is the name of the directory containing this file?
+let s:portable = expand('<sfile>:p:h')
+
+" add the directory to 'runtimepath'
+let &runtimepath = printf('%s,%s,%s/after', s:portable, &runtimepath, s:portable)
+
 set nocompatible
 " Enable use of the mouse for all modes
 set mouse=a
@@ -95,6 +104,13 @@ augroup line_return
 augroup END
 nnoremap g; g;zz
 
+" Making
+au FileType c set makeprg=gcc\ -Wall\ -pedantic\ %\ -o\ %<
+au FileType cpp set makeprg=g++\ -Wall\ -pedantic\ %\ -o\ %<
+
+au FileType c,cpp map <F5> :make<CR>
+au FileType c,cpp map <F6> :! ./%<<CR>
+
 " =========== Gvim Settings =============
 " Removing scrollbars
 if has("gui_running")
@@ -111,9 +127,27 @@ else
     colorschem molokai2
 endif
 
-" ==== Pathogen
+" ==== Plug
 
-execute pathogen#infect()
+call plug#begin('./plugged')
+
+Plug 'scrooloose/nerdtree'
+Plug 'kien/ctrlp.vim'
+Plug 'bling/vim-airline'
+Plug 'paranoida/vim-airlineish'
+Plug 'sheerun/vim-polyglot'
+Plug 'scrooloose/syntastic'
+Plug 'vim-scripts/a.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'majutsushi/tagbar'
+Plug 'autoload_cscope.vim'
+Plug 'chazy/cscope_maps'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
+Plug 'vim-scripts/CCTree'
+
+" ==== End plug
+
 
 filetype plugin indent on
 
